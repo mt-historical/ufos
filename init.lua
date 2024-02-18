@@ -236,7 +236,7 @@ minetest.register_node("ufos:box", {
 			-- restore the fuel inside the node
 			ufos.set_fuel(ufos.ufo,meta:get_int("fuel"))
 			-- add the entity
-			e = minetest.add_entity(pos, "ufos:ufo")
+			minetest.add_entity(pos, "ufos:ufo")
 			-- remove the node
 			minetest.remove_node(pos)
 			-- reset owner for next ufo

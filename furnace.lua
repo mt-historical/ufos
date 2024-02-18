@@ -38,8 +38,14 @@ minetest.register_node("ufos:furnace", {
 
 minetest.register_node("ufos:furnace_active", {
 	description = "UFO charging device",
-	tiles = {"default_steel_block.png", "default_steel_block.png", "default_steel_block.png",
-		"default_steel_block.png", "default_steel_block.png", "default_steel_block.png^ufos_furnace_front.png^ufos_furnace_front_active.png"},
+	tiles = {
+		"default_steel_block.png",
+		"default_steel_block.png",
+		"default_steel_block.png",
+		"default_steel_block.png",
+		"default_steel_block.png",
+		"default_steel_block.png^ufos_furnace_front.png^ufos_furnace_front_active.png"
+	},
 	paramtype2 = "facedir",
 	light_source = 8,
 	drop = "ufos:furnace",
@@ -62,20 +68,6 @@ minetest.register_node("ufos:furnace_active", {
 		return true
 	end,
 })
-
-function hacky_swap_node(pos,name)
-	local node = minetest.get_node(pos)
-	local meta = minetest.get_meta(pos)
-	local meta0 = meta:to_table()
-	if node.name == name then
-		return
-	end
-	node.name = name
-	local meta0 = meta:to_table()
-	minetest.set_node(pos,node)
-	meta = minetest.get_meta(pos)
-	meta:from_table(meta0)
-end
 
 minetest.register_abm({
 	nodenames = {"ufos:furnace","ufos:furnace_active"},
