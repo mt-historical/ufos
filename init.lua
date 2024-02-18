@@ -116,7 +116,7 @@ function ufos.ufo:on_step (dtime)
 	local fuel = ufos.get_fuel(self)
 	if self.driver then
 		local ctrl = self.driver:get_player_control()
-		local vel = self.object:getvelocity()
+		local vel = self.object:get_velocity()
 		if fuel == nil then fuel = 0 end
 		if fuel > 0 and ctrl.up then
 			vel.x = vel.x + math.cos(self.object:getyaw()+math.pi/2)*UFO_SPEED
@@ -145,7 +145,7 @@ function ufos.ufo:on_step (dtime)
 		if vel.y < -UFO_MAX_SPEED then vel.y = -UFO_MAX_SPEED end
 		if vel.z > UFO_MAX_SPEED then vel.z = UFO_MAX_SPEED end
 		if vel.z < -UFO_MAX_SPEED then vel.z = -UFO_MAX_SPEED end
-		self.object:setvelocity(vel)
+		self.object:set_velocity(vel)
 		if ctrl.left then
 			self.object:setyaw(self.object:getyaw()+math.pi/120*UFO_TURN_SPEED)
 		end
