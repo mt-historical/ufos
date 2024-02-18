@@ -1,12 +1,6 @@
 
 ufos = {}
 
-local e
-
-local floor_pos = function(pos)
-	return {x=math.floor(pos.x),y=math.floor(pos.y),z=math.floor(pos.z)}
-end
-
 local UFO_SPEED = 1
 local UFO_TURN_SPEED = 2
 local UFO_MAX_SPEED = 10
@@ -48,7 +42,7 @@ ufos.ufo_from_item = function(itemstack,placer,pointed_thing)
 	local wear = itemstack:get_wear()
 	ufos.set_fuel(ufos.ufo,ufos.fuel_from_wear(wear))
 	-- add the entity
-	e = minetest.add_entity(pointed_thing.above, "ufos:ufo")
+	minetest.add_entity(pointed_thing.above, "ufos:ufo")
 	-- remove the item
 	itemstack:take_item()
 	-- reset owner for next ufo
@@ -74,7 +68,6 @@ ufos.ufo = {
 	visual = "mesh",
 	mesh = "ufo.x",
 	textures = {"ufo_0.png"},
-	
 	driver = nil,
 	owner_name = "",
 	v = 0,
@@ -165,7 +158,7 @@ function ufos.ufo:on_step (dtime)
 			for _, i in ipairs(t) do
 				pos.x = pos.x + i.x; pos.z = pos.z + i.z;
 				if minetest.get_node(pos).name == "ufos:furnace" then
-					meta = minetest.get_meta(pos)
+					local meta = minetest.get_meta(pos)
 					if fuel < 100 and meta:get_int("charge") > 0 then
 						fuel = fuel + 1
 						meta:set_int("charge",meta:get_int("charge")-1)
@@ -177,7 +170,7 @@ function ufos.ufo:on_step (dtime)
 			end
 		end
 	end
-	
+
 	if fuel < 0 then fuel = 0 end
 	if fuel > 100 then fuel = 100 end
 	if self.fueli ~= math.floor(fuel*8/100) then
@@ -201,12 +194,11 @@ minetest.register_tool("ufos:ufo", {
 	inventory_image = "ufos_inventory.png",
 	wield_image = "ufos_inventory.png",
 	tool_capabilities = {load=0,max_drop_level=0, groupcaps={fleshy={times={}, uses=100, maxlevel=0}}},
-	
 	on_place = function(itemstack, placer, pointed_thing)
 		if pointed_thing.type ~= "node" then
 			return
 		end
-		
+
 		-- Call on_rightclick if the pointed node defines it
 		if placer and not placer:get_player_control().sneak then
 			local n = minetest.get_node(pointed_thing.under)
@@ -215,7 +207,7 @@ minetest.register_tool("ufos:ufo", {
 				return minetest.registered_nodes[nn].on_rightclick(pointed_thing.under, n, placer, itemstack) or itemstack
 			end
 		end
-		
+
 		ufos.ufo_from_item(itemstack,placer,pointed_thing)
 		return itemstack
 	end,
@@ -237,7 +229,7 @@ minetest.register_node("ufos:box", {
 	tiles = {"ufos_box.png"},
 	groups = {not_in_creative_inventory=1},
 	on_rightclick = function(pos, node, clicker, itemstack)
-		meta = minetest.get_meta(pos)
+		local meta = minetest.get_meta(pos)
 		if meta:get_string("owner") == clicker:get_player_name() then
 			-- set owner
 			ufos.next_owner = meta:get_string("owner")
