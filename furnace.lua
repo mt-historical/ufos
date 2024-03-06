@@ -17,6 +17,7 @@ minetest.register_node("ufos:furnace", {
 		"default_steel_block.png", "default_steel_block.png", "default_steel_block.png^ufos_furnace_front.png"},
 	paramtype2 = "facedir",
 	groups = {cracky=2},
+	is_ground_content = false,
 	legacy_facedir_simple = true,
 	sounds = default.node_sound_stone_defaults(),
 	on_construct = function(pos)
@@ -50,6 +51,7 @@ minetest.register_node("ufos:furnace_active", {
 	light_source = 8,
 	drop = "ufos:furnace",
 	groups = {cracky=2, not_in_creative_inventory=1},
+	is_ground_content = false,
 	legacy_facedir_simple = true,
 	sounds = default.node_sound_stone_defaults(),
 	on_construct = function(pos)
