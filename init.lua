@@ -228,6 +228,7 @@ minetest.register_node("ufos:box", {
 	description = "UFO BOX (you hacker you!)",
 	tiles = {"ufos_box.png"},
 	groups = {not_in_creative_inventory=1},
+	is_ground_content = false,
 	on_rightclick = function(pos, node, clicker, itemstack)
 		local meta = minetest.get_meta(pos)
 		if meta:get_string("owner") == clicker:get_player_name() then
