@@ -6,6 +6,8 @@ local UFO_TURN_SPEED = 2
 local UFO_MAX_SPEED = 10
 local UFO_FUEL_USE = .01
 
+local materials = xcompat.materials
+
 ufos.fuel_from_wear = function(wear)
 	local fuel
 	if wear == 0 then
@@ -216,9 +218,9 @@ minetest.register_tool("ufos:ufo", {
 minetest.register_craft( {
 	output = 'ufos:ufo',
 	recipe = {
-		{ "", "default:glass", ""},
-		{ "default:mese_crystal_fragment", "", "default:mese_crystal_fragment"},
-		{ "default:steelblock", "default:mese", "default:steelblock"},
+		{ "", materials.glass, ""},
+		{ materials.mese_crystal_fragment, "", materials.mese_crystal_fragment},
+		{ materials.steel_block, materials.mese, materials.steel_block},
 	},
 })
 

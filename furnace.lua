@@ -2,6 +2,16 @@
 ufos.fuel = "default:obsidian_shard"
 ufos.fuel_time = 10
 
+local materials = xcompat.materials
+local sounds = xcompat.sounds
+
+if materials.obsidian ~= "default:obsidian" then
+	ufos.fuel = materials.obsidian
+	ufos.fuel_time = 90
+end
+
+local steel_block_face = core.registered_nodes[materials.steel_block].tiles[1]
+
 ufos.furnace_inactive_formspec =
 	"size[8,5.5]"..
 	"list[current_name;fuel;3.5,0;1,1;]"..
@@ -13,13 +23,13 @@ ufos.furnace_inactive_formspec =
 
 minetest.register_node("ufos:furnace", {
 	description = "UFO charging device",
-	tiles = {"default_steel_block.png", "default_steel_block.png", "default_steel_block.png",
-		"default_steel_block.png", "default_steel_block.png", "default_steel_block.png^ufos_furnace_front.png"},
+	tiles = {steel_block_face, steel_block_face, steel_block_face,
+		steel_block_face, steel_block_face, steel_block_face.."^ufos_furnace_front.png"},
 	paramtype2 = "facedir",
 	groups = {cracky=2},
 	is_ground_content = false,
 	legacy_facedir_simple = true,
-	sounds = default.node_sound_stone_defaults(),
+	sounds = sounds.node_sound_stone_defaults(),
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
 		meta:set_string("formspec", ufos.furnace_inactive_formspec)
@@ -40,12 +50,12 @@ minetest.register_node("ufos:furnace", {
 minetest.register_node("ufos:furnace_active", {
 	description = "UFO charging device",
 	tiles = {
-		"default_steel_block.png",
-		"default_steel_block.png",
-		"default_steel_block.png",
-		"default_steel_block.png",
-		"default_steel_block.png",
-		"default_steel_block.png^ufos_furnace_front.png^ufos_furnace_front_active.png"
+		steel_block_face,
+		steel_block_face,
+		steel_block_face,
+		steel_block_face,
+		steel_block_face,
+		steel_block_face.."^ufos_furnace_front.png^ufos_furnace_front_active.png"
 	},
 	paramtype2 = "facedir",
 	light_source = 8,
@@ -53,7 +63,7 @@ minetest.register_node("ufos:furnace_active", {
 	groups = {cracky=2, not_in_creative_inventory=1},
 	is_ground_content = false,
 	legacy_facedir_simple = true,
-	sounds = default.node_sound_stone_defaults(),
+	sounds = sounds.node_sound_stone_defaults(),
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
 		meta:set_string("formspec", ufos.furnace_inactive_formspec)
@@ -91,9 +101,9 @@ minetest.register_abm({
 minetest.register_craft( {
 	output = 'ufos:furnace',
 	recipe = {
-		{ "default:steel_ingot", "default:obsidian", "default:steel_ingot"},
-		{ "default:obsidian", "default:furnace", "default:obsidian"},
-		{ "default:steel_ingot", "default:obsidian", "default:steel_ingot"},
+		{ materials.steel_ingot, materials.obsidian, materials.steel_ingot},
+		{ materials.obsidian, "default:furnace", materials.obsidian},
+		{ materials.steel_ingot, materials.obsidian, materials.steel_ingot},
 	},
 })
 
